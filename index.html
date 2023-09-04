@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/demo.css">
+    <link rel="stylesheet" href="css/style.css?v=202308151637">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+</head>
+<body>
+<title>宝宝的经期记录</title>
+<div style="display:none;" class="back-to" id="toolBackTop">
+	<a title="返回頂部" onclick="window.scrollTo(0,0);return false;" href="#top" class="back-top"></a>
+</div>
+<div class="container">
+	<div class="row content">
+		<div class="col-md-6">
+			<!--
+			<h3>如有不适尽快就医</h3>
+			<ul>
+				<li>月经突然停止超过 90 天，并且没有怀孕</li>
+				<li>月经经过规律性周期后变得不规律</li>
+				<li>月经出血超过七天</li>
+				<li>月经量比平时多，每两个小时就能浸透一片卫生巾或一根卫生棉条</li>
+				<li>月经间隔小于 21 天或大于 35 天</li>
+				<li>两次月经期间出血</li>
+				<li>经期剧烈疼痛</li>
+				<li>使用卫生棉条后突然发热并感到恶心</li>
+			</ul>
+		</div>
+		-->
+		<div class="col-md-6">
+			<h3>关于月经</h3>
+			<a href="https://zh.wikipedia.org/wiki/月经"><button class="btn btn-light m-2" onclick="$.hulla.send('正在加载', 'light')">维基百科</button></a>
+			<a href="https://baike.baidu.com/item/月经/94195"><button class="btn btn-info m-2" onclick="$.hulla.send('正在加载', 'info')">百度百科</button></a>
+			<a href="http://www.a-hospital.com/w/月经"><button class="btn btn-danger m-2" onclick="$.hulla.send('正在加载', 'danger')">医学百科</button></a>
+			<a href="https://www.baike.com/wikiid/1987634366782328299?prd=home_search&search_id=1x507alax8yo00&view_id=yrg3k6mt6q800"><button class="btn btn-warning m-2" onclick="$.hulla.send('正在加载', 'warning')">头条百科</button></a>
+			<a href="https://baike.sogou.com/v59933.htm?fromTitle=月经"><button class="btn btn-dark m-2" onclick="$.hulla.send('正在加载', 'dark')">搜狗百科</button></a>
+			<a href="https://baike.so.com/doc/5337218-5572657.html"><button class="btn btn-success m-2" onclick="$.hulla.send('正在加载', 'success')">360 百科</button></a><br><br>
+			<ul>
+			   
+		<!-- 新增一个表单用于输入数据 -->
+                <form id="addTimelineForm" class="mt-4">
+                    <h3>添加新数据</h3>
+                    <div class="form-group">
+                        <label for="current_period_date">本次月经来临的日期（月经周期）</label>
+                        <input type="date" class="form-control" id="current_period_date" required>
+                    </div>
+                    <!--<div class="form-group">
+                        <label for="cycle_days">月经周期（生殖系统中的一个重要循环）</label>
+                        <input type="number" class="form-control" id="cycle_days" placeholder="上一次至本次的间隔天数" required>
+                    </div>-->
+                    <div class="form-group">
+                        <label for="period_days">行经时间（子宫内膜脱落伴随阴道出血）</label>
+                        <input type="number" class="form-control" id="period_days" placeholder="出血起始至结束天数" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fight_count">痛经次数（子宫内膜脱落引起的子宫收缩）</label>
+                        <input type="number" class="form-control" id="fight_count" placeholder="痛经的严重程度因人而异" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="health_status">身体状况（管理和维护自己的生殖健康）</label>
+                        <input type="text" class="form-control" id="health_status" placeholder="描述你的身体状况" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">保存到数据库</button>
+                </form>
+			</ul>
+		</div>
+	</div>
+</div>
+<script src="js/jquery.min.js" type="text/javascript"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/bootstrap.min.js?v=202209201931"></script>
+<script src="js/hullabaloo.js?v=202209201932"></script>
+
+<section class="timeline">
+        <ul>
+            <div id="timelineList">
+                <!-- 已有的数据项将在这里显示 -->
+            </div>
+            
+             <li class="in-view">
+                <div> 
+                    <time>2023-05-12</time>
+                    <div class="last time">
+                        <h5>月经周期</h5>
+                        <span><span style="color:rgb(255,0,255);">首次记录</span></span>
+                    </div>
+                    <div class="this time">
+                        <h5>行径时间</h5>
+                        <span><span style="color:rgb(255,0,255);">首次记录</span></span>
+                    </div>
+                    <div class="Sore">
+                        <h5>痛经次数</h5>
+                        <span style="color:rgb(255, 166, 0);">首次记录次</span> 
+                    </div>
+                    <div class="Sore">
+                        <h5>身体状况</h5>
+                        <span style="color:rgb(0,0,139);">首次记录</span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+       
+</section>
+
+  <script type="text/javascript">
+  
+    $.hulla = new hullabaloo();
+
+    // Function to calculate heart status and generate HTML
+    function calculateHeartStatus(fight_count) {
+      // 判断吵架次数并生成爱心字符串
+        const heartCount = Math.min(fight_count, 6); // 限制最多为 6 个爱心
+        const emptyHearts = '♥'.repeat(6 - heartCount); // 补全空心
+        const fullHearts = '♡'.repeat(heartCount);
+        const fightStatus = `<span style="color:rgb(255, 166, 0);">${fullHearts}${emptyHearts}</span> ${fight_count}次`;
+        return fightStatus;
+
+    }
+
+    // Function to add a timeline item
+    function addTimelineItem(cycle_days, period_days, fight_count, health_status, created_at, current_period_date) {
+        const timelineList = document.getElementById('timelineList');
+        
+        // Calculate cycle status
+        const cycleStatus = cycle_days < 21 || cycle_days > 36
+            ? '<span style="color:rgb(255,0,0);">异常</span>'
+            : '<span style="color:rgb(0,255,0);">正常</span>';
+        
+        // Calculate period status
+        const periodStatus = period_days < 3 || period_days > 7
+            ? '<span style="color:rgb(255,0,0);">异常</span>'
+            : '<span style="color:rgb(0,255,0);">正常</span>';
+
+        // Calculate fight status
+        const fightStatus = calculateHeartStatus(fight_count);
+
+        // Construct the new timeline item
+        const newItem = `
+            <li class="in-view">
+                <div> 
+                    <time>${current_period_date}</time>
+                    <div class="last time">
+                        <h5>月经周期</h5>
+                        <span><span style="color:rgb(255,0,255);">${cycle_days}</span>天</span>
+                        ${cycleStatus}
+                    </div>
+                    <div class="this time">
+                        <h5>行径时间</h5>
+                        <span><span style="color:rgb(255,0,255);">${period_days}</span>天</span>
+                        ${periodStatus}
+                    </div>
+                    <div class="Sore">
+                        <h5>痛经次数</h5>
+                        ${fightStatus}
+                    </div>
+                    <div class="Sore">
+                        <h5>身体状况</h5>
+                        <span style="color:rgb(0,0,139);">${health_status}</span>
+                    </div>
+                </div>
+            </li>
+        `;
+
+        // Insert the new item at the beginning of the timeline
+        timelineList.insertAdjacentHTML('afterbegin', newItem);
+        var newItemElement = timelineList.firstElementChild;
+        newItemElement.classList.add("in-view");
+    }       
+
+    // Function to load data and display it on the timeline
+    async function loadAndDisplayData() {
+        try {
+            const response = await fetch('read_data.php');
+            const data = await response.json();
+
+            let totalCycleDays = 0;
+            let abnormalCycleCount = 0;
+
+            data.forEach(item => {
+                totalCycleDays += parseInt(item.cycle_days);
+
+                if (item.cycle_days < 21 || item.cycle_days > 36) {
+                    abnormalCycleCount++;
+                }
+
+                addTimelineItem(item.cycle_days, item.period_days, item.fight_count, item.health_status, item.created_at, item.current_period_date);
+            });
+
+            const averageCycleDays = (totalCycleDays / data.length).toFixed(1);
+
+            setTimeout(function () {
+                $.hulla.send(`平均周期：${averageCycleDays}天`, "success");
+            }, 1000);
+
+            setTimeout(function () {
+                $.hulla.send(`异常周期：${abnormalCycleCount}次`, "info");
+            }, 2000);
+            setTimeout(function() {
+            	$.hulla.send("信息仅作参考", "warning");
+            }, 3000);
+             addAnimationToTimeline();
+        } catch (error) {
+            console.error('发生错误:', error);
+            alert('发生错误，请稍后再试');
+        }
+    }
+
+    // Load and display data when the page loads
+    window.addEventListener('load', function () {
+        loadAndDisplayData();
+    });
+
+    // Form submission handling
+    const addTimelineForm = document.getElementById('addTimelineForm');
+    addTimelineForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const period_days = document.getElementById('period_days').value;
+        const fight_count = document.getElementById('fight_count').value;
+        const health_status = document.getElementById('health_status').value;
+        const current_period_date = document.getElementById('current_period_date').value;
+        
+
+        try {
+            const response = await fetch('save_data.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    period_days,
+                    fight_count,
+                    health_status,
+                    current_period_date
+                })
+            });
+
+            const data = await response.json();
+            if (data.status === 'success') {
+                addTimelineItem(period_days, fight_count, health_status, data.created_at, current_period_date);
+                alert('数据已成功保存到数据库');
+            } else {
+                alert('保存数据时出现错误');
+            }
+        } catch (error) {
+            console.error('发生错误:', error);
+            alert('发生错误，请稍后再试');
+        }
+    });
+</script>
+
+    <style>
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: normal 16px/1.5 'Titillium Web', sans-serif;
+            background: linear-gradient(54deg, #9164ff, #8bfff4);
+            color: #3c3f64;
+            overflow-x: hidden;
+            padding-bottom: 50px;
+        }
+
+        .timeline ul li {
+            list-style-type: none;
+            position: relative;
+            width: 6px;
+            margin: 0 auto;
+            padding-top: 50px;
+            background: #fff;
+        }
+
+            .timeline ul li::after {
+                content: '';
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                transform: translateX(-50%) rotate(45deg);
+                width: 20px;
+                height: 20px;
+                z-index: 2;
+                background: #eee;
+            }
+
+            .timeline ul li div {
+                position: relative;
+                bottom: 0;
+                width: 600px;
+                padding: 20px;
+                background: #fff;
+                box-shadow: 4px 13px 30px 1px rgba(252, 56, 56, 0.2);
+                border-radius: 5px;
+                display: flex;
+                align-items: center;
+            }
+
+                .timeline ul li div time {
+                    position: absolute;
+                    background: #f5af19;
+                    width: auto;
+                    height: 30px;
+                    top: -15px;
+                    border-radius: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    letter-spacing: 2px;
+                }
+
+                .timeline ul li div div {
+                    height: 100px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                }
+
+                    .timeline ul li div div p {
+                        text-align: center;
+                    }
+
+                .timeline ul li div .discovery {
+                    margin-right: 10px;
+                }
+
+            .timeline ul li:nth-of-type(odd) > div {
+                left: 45px;
+            }
+
+            .timeline ul li:nth-of-type(even) > div {
+                left: -639px;
+            }
+
+            .timeline ul li div {
+                visibility: hidden;
+                opacity: 0;
+                transition: all 0.5s ease-in-out;
+            }
+
+            .timeline ul li:nth-of-type(odd) div {
+                transform: translate3d(100px, -10px, 0) rotate(52deg);
+            }
+
+            .timeline ul li:nth-of-type(even) div {
+                transform: translate3d(-100px, -10px, 0) rotate(13deg);
+            }
+
+            .timeline ul li.in-view div {
+                transform: none;
+                visibility: visible;
+                opacity: 1;
+            }
+
+        @media screen and (max-width: 900px) {
+            .timeline ul li div {
+                width: 250px;
+                flex-direction: column;
+            }
+
+                .timeline ul li div div {
+                    width: 80%;
+                    margin: 10px;
+                }
+
+            .timeline ul li:nth-of-type(even) > div {
+                left: -289px;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            body {
+                background: #8bfff4;
+            }
+
+            .timeline ul li {
+                margin-left: 20px;
+            }
+
+                .timeline ul li div {
+                    width: calc(100vw - 91px);
+                }
+
+                .timeline ul li:nth-of-type(even) > div {
+                    left: 45px;
+                }
+        }
+    </style>
+
+     
+   
+
+    <script>
+      // 添加动画效果到时间线
+        function addAnimationToTimeline() {
+            var items = document.querySelectorAll(".timeline li");
+        
+            function isElementInViewport(el) {
+                var rect = el.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+        
+            function callbackFunc() {
+                for (var i = 0; i < items.length; i++) {
+                    if (isElementInViewport(items[i])) {
+                        if (!items[i].classList.contains("in-view")) {
+                            items[i].classList.add("in-view");
+                        }
+                    } else if (items[i].classList.contains("in-view")) {
+                        items[i].classList.remove("in-view");
+                    }
+                }
+            }
+        
+            window.addEventListener("load", callbackFunc);
+            window.addEventListener("scroll", callbackFunc);
+        }
+
+            </script>
+	
+		<script>
+		$(function () {
+	        var bt = $('#toolBackTop');
+	        var sw = $(document.body)[0].clientWidth;
+	 
+	        var limitsw = (sw - 840) / 2 - 80;  //距离右侧距离
+	        if (limitsw > 0){
+                limitsw = parseInt(limitsw);
+                bt.css("right",limitsw/8);
+	        }
+	 
+	        $(window).scroll(function() {
+                var st = $(window).scrollTop();
+                if(st > 30){
+                        bt.show();
+                }else{
+                        bt.hide();
+                }
+	        });
+	});
+
+	$(window).scroll(function(){
+            if($(window).scrollTop()>300){
+                $('#return-top').fadeIn(300);
+                }
+             else{$('#return-top').fadeOut(200);}
+                 })
+ 
+ 
+// 点击按钮，使得页面返回顶部
+$("#return-top").click(function(){
+scrollTo(0,0);
+});
+// 鼠标悬浮按钮之上，图片消失，文字显示
+$(".top_e").mouseover(function(){
+    $("#img").hide();
+    $("#font").show();
+})
+//鼠标离开，文字消失，图片显示。
+$(".top_e").mouseout(function(){
+    $("#font").hide();
+    $("#img").show();
+})
+
+</script>
+
+
+
+</body>
+</html>
