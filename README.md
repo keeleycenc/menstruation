@@ -1,5 +1,5 @@
 # menstruation
-# menstruation 记录女友月经周期
+# HTML+PHP 记录女友月经周期
 
 sql数据库快速创建表命令：
 `CREATE TABLE timeline_data (
