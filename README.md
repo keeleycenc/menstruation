@@ -32,6 +32,24 @@ CREATE TABLE timeline_data (
 6.created_at：一个 TIMESTAMP 类型的列，用来存储数据创建的时间。默认值设置为当前时间戳。  
 7.current_period_date：一个 DATE 类型的列，用来存储当前月经日期。  # menstruation
 
+
+## 注意的事项
+
+- 第一次添加，需要手动更改cycle_days的值，因为：
+```sql
+ // 获取上次月经日期
+$stmt = $pdo->query("SELECT MAX(current_period_date) FROM timeline_data");
+$lastPeriodDate = $stmt->fetchColumn();
+```
+首次创建时，无法获取上一次的日期，所以会得到不正确的值
+
 # 演示
-点击转到[测试](https://keeleycenc.com/Mygithub/menstruation/index.html)  
-点击转到[正式](https://keeleycenc.com/Brave-main/Typecho/index.php/6.html)
+点击转到[演示地址](https://keeleycenc.com/Mygithub/menstruation/index.html)  
+
+## 贡献者
+
+- [Keeleycenc](https://keeleycenc.com)
+
+---
+
+如果您在使用过程中遇到问题或有改进建议，请随时提出。感谢您的使用！
