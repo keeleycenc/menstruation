@@ -31,3 +31,7 @@ CREATE TABLE timeline_data (
 5.health_status：一个 VARCHAR 类型的列，用来存储身体状况。  
 6.created_at：一个 TIMESTAMP 类型的列，用来存储数据创建的时间。默认值设置为当前时间戳。  
 7.current_period_date：一个 DATE 类型的列，用来存储当前月经日期。  # menstruation
+
+# 演示
+点击转到[测试](https://keeleycenc.com/Mygithub/menstruation/index.html)  
+点击转到[正式](https://keeleycenc.com/Brave-main/Typecho/index.php/6.html)
