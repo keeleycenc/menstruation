@@ -1,0 +1,281 @@
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* 设置所有元素的盒子模型为 border-box */
+}
+
+.col-md-6 {
+    margin: 0 auto;
+    /* 将左右外边距设为 auto，实现水平居中 */
+}
+
+body {
+    font: normal 16px/1.5 'Titillium Web', sans-serif;
+    /* 设置字体样式 */
+    background: linear-gradient(54deg, #9164ff, #8bfff4);
+    /* 设置背景为线性渐变 */
+    color: #3c3f64;
+    /* 设置文字颜色 */
+    overflow-x: hidden;
+    /* 隐藏水平滚动条 */
+    padding-bottom: 0px;
+    /* 设置底部内边距为 0 */
+}
+
+.timeline ul li {
+    opacity: 0.8;
+    /* 设置元素的不透明度为 0.3 */
+    list-style-type: none;
+    /* 去除列表项前的默认标记 */
+    position: relative;
+    /* 设置定位方式为相对定位 */
+    width: 6px;
+    /* 设置宽度 */
+    margin: 0 auto;
+    /* 水平居中 */
+    padding-top: 50px;
+    /* 设置顶部内边距 */
+    background: #fff;
+    /* 设置背景颜色为白色 */
+}
+
+.timeline ul li::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%) rotate(45deg);
+    /* 位移和旋转转换 */
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+    background: #eee;
+    /* 设置背景颜色 */
+}
+
+.timeline ul li div {
+    position: relative;
+    bottom: 0;
+    width: 600px;
+    /* 设置宽度 */
+    padding: 20px;
+    /* 设置内边距 */
+    background: #fff;
+    /* 设置背景颜色为白色 */
+    box-shadow: 4px 13px 30px 1px rgba(252, 56, 56, 0.2);
+    /* 设置盒子阴影 */
+    border-radius: 5px;
+    /* 设置边框圆角 */
+    display: flex;
+    /* 启用弹性盒布局 */
+    align-items: center;
+    /* 垂直居中对齐 */
+}
+
+.timeline ul li div time {
+    position: absolute;
+    background: #f5af19;
+    /* 设置背景颜色 */
+    width: auto;
+    height: 30px;
+    top: -15px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    /* 水平居中对齐 */
+    align-items: center;
+    /* 垂直居中对齐 */
+    letter-spacing: 2px;
+    /* 设置字母间距 */
+}
+
+.timeline ul li div div {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    /* 设置布局方向为垂直 */
+    justify-content: center;
+    /* 水平居中对齐 */
+    align-items: center;
+    /* 垂直居中对齐 */
+}
+
+.timeline ul li div div p {
+    text-align: center;
+    /* 设置文本居中 */
+}
+
+.timeline ul li div .discovery {
+    margin-right: 10px;
+    /* 设置右外边距 */
+}
+
+.timeline ul li:nth-of-type(odd)>div {
+    left: 22px;
+}
+
+.timeline ul li:nth-of-type(even)>div {
+    left: -639px;
+}
+
+.timeline ul li div {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+    /* 设置过渡效果 */
+}
+
+/* 移动端样式 */
+@media screen and (max-width: 768px) {
+    .timeline ul li:nth-of-type(odd) div.in-view {
+        animation: fadeInRotateOdd 0.5s forwards;
+    }
+
+    .timeline ul li:nth-of-type(even) div.in-view {
+        animation: fadeInRotateEven 0.5s forwards;
+    }
+}
+
+/* 电脑端样式 */
+@media screen and (min-width: 769px) {
+    .timeline ul li:nth-of-type(odd) div {
+        transform: translate3d(100px, -10px, 0) rotate(52deg);
+    }
+
+    .timeline ul li:nth-of-type(even) div {
+        transform: translate3d(-100px, -10px, 0) rotate(13deg);
+    }
+}
+
+.timeline ul li.in-view div {
+    transform: none;
+    visibility: visible;
+    opacity: 1;
+}
+
+@media screen and (max-width: 900px) {
+    .timeline ul li div {
+        width: 250px;
+        /* 调整宽度 */
+        flex-direction: column;
+        /* 改变布局方向为垂直 */
+    }
+
+    .timeline ul li div div {
+        width: 80%;
+        margin: 10px;
+        /* 设置外边距 */
+    }
+
+    .timeline ul li:nth-of-type(even)>div {
+        left: -289px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    body {
+        animation: breathe 4s infinite alternate;
+        /* 设置动画 */
+        background: #8bfff4;
+        /* 调整背景颜色 */
+    }
+
+    @keyframes breathe {
+        0% {
+            background: #8bfff4;
+        }
+
+        100% {
+            background: #000000;
+            /* 动画背景颜色变化 */
+        }
+    }
+
+    .timeline ul li {
+        margin-left: 20px;
+        /* 设置左外边距 */
+    }
+
+    .timeline ul li div {
+        width: calc(100vw - 91px);
+        /* 计算宽度 */
+    }
+
+    .timeline ul li:nth-of-type(even)>div {
+        left: 20px;
+    }
+}
+
+.fc-header-toolbar {
+    /* 日历头部 */
+    background-color: #f5f5f5;
+    color: #333;
+    font-size: 11px;
+    /* 较小的字体大小 */
+    padding: 5px;
+    /* 较小的内边距 */
+}
+
+.fc-day {
+    /* 日期 */
+    font-size: 16px;
+}
+
+.fc-event {
+    /* 事件样式 */
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+/* 返回顶部 */
+.back-to {
+bottom: 55px;
+overflow: hidden;
+position: fixed;
+right: 10px;
+width: 110px;
+z-index: 999;
+}
+.back-to .back-top {
+background: url("../img/TOP.png") no-repeat scroll 0 0 transparent;
+display: block;
+float: right;
+height: 50px;
+margin-left: 10px;
+outline: 0 none;
+text-indent: -9999em;
+width: 50px;
+}
+.back-to .back-top:hover {
+background-position: -50px 0
+}
+
+.jumbotron {
+text-align: center;
+border-bottom: 1px solid #e5e5e5;
+}
+.jumbotron .btn {
+padding: 14px 34px;
+font-size: 221px;
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 868px) {
+/* Remove the padding we set earlier */
+.header,
+.footer {
+    padding-right: 0;
+    padding-left: 0;
+}
+/* Space out the masthead */
+.header {
+    margin-bottom: 280px;
+}
+/* Remove the bottom border on the jumbotron for visual effect */
+.jumbotron {
+    border-bottom: 0;
+}
+}
