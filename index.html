@@ -10,6 +10,127 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
 </head>
 
+<!-- 全屏加载动画开始 -->
+<style>
+    main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: 100vh;
+    }
+  
+    #CustomLoadanimation {
+          background-color: #fff;
+          height: 100%;
+          width: 100%;
+          position: fixed;
+          z-index: 1;
+          margin-top: 0px;
+          top: 0px;
+      }
+    /* Add this class to hide the element by default */
+    .hidden {
+        display: none;
+    }
+  
+    .spinner-triple {
+        will-change: transform;
+        width: 70px;
+        height: 70px;
+        border: 5px solid transparent;
+        border-top-color: blue ;
+        border-radius: 50%;
+        animation: spin 2s linear infinite;
+    }
+  
+    .spinner-triple::before {
+        content: "";
+        border: 5px solid transparent;
+        border-top-color: lightskyblue ;
+        border-radius: 50%;
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        right: 5px;
+        bottom: 5px;
+        animation: spin 1s linear infinite;
+    }
+  
+    .spinner-triple::after {
+        content: "";
+        border: 5px solid transparent;
+        border-top-color: lightblue;
+        border-radius: 50%;
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        animation: spin 1.5s linear infinite;
+    }
+  
+    .spinner-triple>div{
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        animation: spin 2s linear infinite;
+    }
+  
+    @keyframes spin {
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+</style>
+<main id="CustomLoadanimation" style="z-index: 999999;" class="hidden">
+    <div class="spinner-triple">
+        <div class="spinner-triple">
+            <div class="spinner-triple"></div>
+        </div>
+    </div>
+</main>
+<script>
+    // 显示加载动画
+    function showCustomLoadingAnimation() {
+        var CustomLoadanimation = document.getElementById('CustomLoadanimation');
+        CustomLoadanimation.style.display = 'flex'; // or 'block', depending on your layout
+        CustomLoadanimation.style.visibility = 'visible';
+    }
+
+    // 渐隐加载动画
+    function fadeOutCustomLoadingAnimation(CustomLoadanimation) {
+        // 延时1秒后开始渐隐动画
+        setTimeout(function() {
+            var opacity = 1; // 初始不透明度
+            var interval = 50; // 更新频率（毫秒）
+            var fadeOutSpeed = 0.06; // 渐隐速度
+
+            var fadeOutInterval = setInterval(function() {
+                opacity -= fadeOutSpeed;
+                CustomLoadanimation.style.opacity = opacity;
+
+                if (opacity <= 0) {
+                    // 动画结束，隐藏加载动画并清除定时器
+                    CustomLoadanimation.style.display = 'none';
+                    clearInterval(fadeOutInterval);
+                }
+            }, interval);
+        }, 500); //等待 1 秒钟
+    }
+
+    // 隐藏加载动画函数
+    function hideCustomLoadingAnimation() {
+        var CustomLoadanimation = document.getElementById('CustomLoadanimation');
+        fadeOutCustomLoadingAnimation(CustomLoadanimation);
+    }
+
+    // 全屏动画加载
+    showCustomLoadingAnimation();
+</script>
+<!-- 全屏加载动画结束 -->
+
 <body>
 <title>宝宝的经期记录</title>
 <div style="display:none;" class="back-to" id="toolBackTop">
@@ -207,6 +328,21 @@
         return null; // 不足以预测
     }
 
+     // 新函数，用于显示弹窗信息
+     function displayPopupMessages(averageCycleDays, abnormalCycleCount) {
+        setTimeout(function () {
+            $.hulla.send(`平均周期：${averageCycleDays}天`, "success");
+        }, 1000);
+
+        setTimeout(function () {
+            $.hulla.send(`异常周期：${abnormalCycleCount}次`, "info");
+        }, 2000);
+
+        setTimeout(function () {
+            $.hulla.send("信息仅作参考", "warning");
+        }, 3000);
+    }
+
     // 加载并展示数据
     async function loadAndDisplayData(calendar) {
         try {
@@ -246,20 +382,14 @@
 
             const averageCycleDays = (totalCycleDays / data.length).toFixed(1);
 
-            // 显示平均周期
-            setTimeout(function () {
-                $.hulla.send(`平均周期：${averageCycleDays}天`, "success");
-            }, 1000);
+            // 页面加载完成执行
+            window.addEventListener('load', function() {
+                 // 全屏加载结束
+                 hideCustomLoadingAnimation();
+                // 弹窗
+                displayPopupMessages(averageCycleDays, abnormalCycleCount);
+            });
 
-            // 显示异常周期次数
-            setTimeout(function () {
-                $.hulla.send(`异常周期：${abnormalCycleCount}次`, "info");
-            }, 2000);
-
-            // 显示警告信息
-            setTimeout(function () {
-                $.hulla.send("信息仅作参考", "warning");
-            }, 3000);
             addAnimationToTimeline();
         } catch (error) {
             console.error('发生错误:', error);
