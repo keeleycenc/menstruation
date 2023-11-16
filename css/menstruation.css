@@ -25,6 +25,34 @@ body {
     /* 设置底部内边距为 0 */
 }
 
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -999;
+    opacity: 0.3;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center 0;
+}
+
+/* 电脑端样式 */
+@media screen and (min-width: 1024px) {
+    body::before {
+        background-image: url(../img/PC.jpg);
+    }
+}
+
+/* 移动端样式 */
+@media screen and (max-width: 1023px) {
+    body::before {
+        background-image: url(../img/mobile.jpg);
+    }
+}
+
 .timeline ul li {
     opacity: 0.8;
     /* 设置元素的不透明度为 0.3 */
