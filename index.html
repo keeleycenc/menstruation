@@ -128,6 +128,12 @@
 
     // 全屏动画加载
     showCustomLoadingAnimation();
+
+    // 文档主体加载完成
+    document.addEventListener('DOMContentLoaded', function() {
+        // 全屏加载结束
+        hideCustomLoadingAnimation();
+    });
 </script>
 <!-- 全屏加载动画结束 -->
 
@@ -330,17 +336,7 @@
 
      // 新函数，用于显示弹窗信息
      function displayPopupMessages(averageCycleDays, abnormalCycleCount) {
-        setTimeout(function () {
-            $.hulla.send(`平均周期：${averageCycleDays}天`, "success");
-        }, 1000);
-
-        setTimeout(function () {
-            $.hulla.send(`异常周期：${abnormalCycleCount}次`, "info");
-        }, 2000);
-
-        setTimeout(function () {
-            $.hulla.send("信息仅作参考", "warning");
-        }, 3000);
+        
     }
 
     // 加载并展示数据
@@ -382,14 +378,17 @@
 
             const averageCycleDays = (totalCycleDays / data.length).toFixed(1);
 
-            // 页面加载完成执行
-            window.addEventListener('load', function() {
-                 // 全屏加载结束
-                 hideCustomLoadingAnimation();
-                // 弹窗
-                displayPopupMessages(averageCycleDays, abnormalCycleCount);
-            });
+            setTimeout(function () {
+                $.hulla.send(`平均周期：${averageCycleDays}天`, "success");
+            }, 1000);
 
+            setTimeout(function () {
+                $.hulla.send(`异常周期：${abnormalCycleCount}次`, "info");
+            }, 2000);
+
+            setTimeout(function () {
+                $.hulla.send("信息仅作参考", "warning");
+            }, 3000);
             addAnimationToTimeline();
         } catch (error) {
             console.error('发生错误:', error);
