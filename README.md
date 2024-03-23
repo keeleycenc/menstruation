@@ -55,7 +55,7 @@ $lastPeriodDate = $stmt->fetchColumn();
 首次创建时，无法获取上一次的日期，所以会得到不正确的值
 
 # 演示
-点击转到[演示地址](https://keeleycenc.com/Mygithub/menstruation/index.html)  
+点击转到[情侣博客预览](https://keeleycenc.com/Brave/index.php/6.html) 
 
 ## 贡献者
 
